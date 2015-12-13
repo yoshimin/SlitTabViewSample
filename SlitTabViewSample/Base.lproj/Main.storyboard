@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Practice" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tNZ-KW-ozX" customClass="SlitTabView" customModule="Practice" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="20" width="600" height="50"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="Ivb-7A-NT0"/>
+                                </constraints>
+                                <connections>
+                                    <action selector="didSelectTab" destination="BYZ-38-t0r" eventType="valueChanged" id="zbh-ml-58R"/>
+                                </connections>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZCB-aN-6P4">
+                                <rect key="frame" x="275" y="275" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="CJk-nV-TJy"/>
+                                    <constraint firstAttribute="height" constant="50" id="eJB-Lb-gt6"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="ZCB-aN-6P4" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="1SI-Oy-J8w"/>
+                            <constraint firstItem="tNZ-KW-ozX" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="3lr-si-BMy"/>
+                            <constraint firstItem="ZCB-aN-6P4" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="7m0-D7-yBT"/>
+                            <constraint firstItem="tNZ-KW-ozX" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="H6m-BJ-O5R"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="tNZ-KW-ozX" secondAttribute="trailing" constant="-20" id="e9I-Ol-1MI"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="label" destination="ZCB-aN-6P4" id="etl-fD-X9U"/>
+                        <outlet property="tabView" destination="tNZ-KW-ozX" id="YJP-Fa-tN0"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="340" y="387"/>
+        </scene>
+    </scenes>
+</document>

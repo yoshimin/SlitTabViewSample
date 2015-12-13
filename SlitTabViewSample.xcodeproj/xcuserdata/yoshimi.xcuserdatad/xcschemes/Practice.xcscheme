@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "88BFA04F1BDB7E5E00FE6641"
-               BuildableName = "Practice.app"
-               BlueprintName = "Practice"
-               ReferencedContainer = "container:Practice.xcodeproj">
+               BuildableName = "SlitTabViewSample.app"
+               BlueprintName = "SlitTabViewSample"
+               ReferencedContainer = "container:SlitTabViewSample.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "88BFA04F1BDB7E5E00FE6641"
-            BuildableName = "Practice.app"
-            BlueprintName = "Practice"
-            ReferencedContainer = "container:Practice.xcodeproj">
+            BuildableName = "SlitTabViewSample.app"
+            BlueprintName = "SlitTabViewSample"
+            ReferencedContainer = "container:SlitTabViewSample.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -56,9 +56,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "88BFA04F1BDB7E5E00FE6641"
-            BuildableName = "Practice.app"
-            BlueprintName = "Practice"
-            ReferencedContainer = "container:Practice.xcodeproj">
+            BuildableName = "SlitTabViewSample.app"
+            BlueprintName = "SlitTabViewSample"
+            ReferencedContainer = "container:SlitTabViewSample.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -75,9 +75,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "88BFA04F1BDB7E5E00FE6641"
-            BuildableName = "Practice.app"
-            BlueprintName = "Practice"
-            ReferencedContainer = "container:Practice.xcodeproj">
+            BuildableName = "SlitTabViewSample.app"
+            BlueprintName = "SlitTabViewSample"
+            ReferencedContainer = "container:SlitTabViewSample.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

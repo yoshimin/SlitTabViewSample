@@ -11,21 +11,11 @@ import UIKit
 public class SlitTabView: UIControl {
     private let kSlitSize = CGSizeMake(12, 6)
     
-    // 選択されているタブのインデックス
-    var _selectedTabIndex = 0
-    public var selectedTabIndex: Int {
-        get {
-            return _selectedTabIndex
-        }
-        set(index) {
-            _selectedTabIndex = index
-            
-        }
-    }
-    
     var labels: [UILabel] = []
     var tabLayer: CAShapeLayer?
     var labelLayer: CAShapeLayer?
+    
+    // MARK: - Initializing a Segmented Control
     
     public override func awakeFromNib() {
         super.awakeFromNib()
@@ -39,6 +29,8 @@ public class SlitTabView: UIControl {
         layer.shadowOpacity = 0.6
     }
     
+    //MARK: - Managing Segment Content
+    
     // タブに表示する項目をセットする
     public func setItems(titles: [String]?) {
         labels.removeAll()
@@ -51,8 +43,6 @@ public class SlitTabView: UIControl {
             
             addSubview(label)
         }
-        
-        setNeedsDisplay()
     }
     
     // タブに表示する項目を追加する
@@ -64,13 +54,86 @@ public class SlitTabView: UIControl {
         labels.insert(label, atIndex: index)
         
         addSubview(label)
-        
-        setNeedsDisplay()
     }
     
     // タブに表示されているタイトルを取得する
     public func titleForItemAtIndex(index: Int) -> String? {
         return labels[index].text
+    }
+    
+    // MARK: - Managing Tabs
+    
+    // 選択されているタブのインデックス
+    var _selectedTabIndex = 0
+    public var selectedTabIndex: Int {
+        get {
+            return _selectedTabIndex
+        }
+        set(index) {
+            _selectedTabIndex = index
+            
+        }
+    }
+    
+    func moveSlit(animated: Bool) {
+        if animated {
+            self.setLabelsFont()
+            
+            let animation = CABasicAnimation(keyPath: "path")
+            animation.duration = 0.25
+            animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
+            animation.removedOnCompletion = false
+            animation.fillMode = kCAFillModeForwards
+            
+            CATransaction.begin()
+            CATransaction.setCompletionBlock({
+                let tabAnimation = self.tabLayer?.animationForKey("tabAnimation")
+                let labelAnimation = self.labelLayer?.animationForKey("labelAnimation")
+                
+                // アニメーションが完了したら各Layerのpathに移動後のpathを反映させる
+                if tabAnimation != nil {
+                    self.tabLayer?.path = self.tabLayerPath()
+                }
+                if labelAnimation != nil {
+                    self.labelLayer?.path = self.labelLayerPath()
+                }
+            })
+            
+            animation.toValue = tabLayerPath()
+            tabLayer?.addAnimation(animation, forKey: "tabAnimation")
+            
+            animation.toValue = labelLayerPath()
+            labelLayer?.addAnimation(animation, forKey: "labelAnimation")
+            
+            CATransaction.commit()
+            return
+        }
+        
+        tabLayer?.path = tabLayerPath()
+        labelLayer?.path = labelLayerPath()
+        setLabelsFont()
+    }
+    
+    // MARK: - Customizing Appearance
+    
+    public override func layoutSubviews() {
+        super.layoutSubviews()
+        setLabelsFrame()
+        setLabelsFont()
+        
+        tabLayer?.removeFromSuperlayer()
+        
+        tabLayer = CAShapeLayer()
+        tabLayer?.fillColor = UIColor(red: 241/255, green: 241/255, blue: 241/255, alpha: 1).CGColor
+        tabLayer?.path = tabLayerPath()
+        layer.insertSublayer(tabLayer!, atIndex: 0)
+        
+        labelLayer?.removeFromSuperlayer()
+        
+        labelLayer = CAShapeLayer()
+        labelLayer?.fillColor = UIColor.whiteColor().CGColor
+        labelLayer?.path = labelLayerPath()
+        layer.insertSublayer(labelLayer!, above: tabLayer)
     }
     
     // selectedTabIndexに応じて切れ込みが入ったタブの描画用のパスを返す
@@ -131,59 +194,6 @@ public class SlitTabView: UIControl {
         return maskPath.CGPath
     }
     
-    func moveSlit(animated: Bool) {
-        if animated {
-            self.setLabelsFont()
-            
-            let animation = CABasicAnimation(keyPath: "path")
-            animation.duration = 0.25
-            animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
-            
-            // completion処理用に、アニメーションが終了しても登録を残しておく
-            animation.removedOnCompletion = false
-            animation.fillMode = kCAFillModeForwards
-            
-            CATransaction.begin()
-            CATransaction.setCompletionBlock({
-                self.tabLayer?.path = self.tabLayerPath()
-                self.labelLayer?.path = self.labelLayerPath()
-            })
-            
-            animation.toValue = tabLayerPath()
-            tabLayer?.addAnimation(animation, forKey: "tabAnimation")
-            
-            animation.toValue = labelLayerPath()
-            labelLayer?.addAnimation(animation, forKey: "labelAnimation")
-            
-            CATransaction.commit()
-            return
-        }
-        
-        tabLayer?.path = tabLayerPath()
-        labelLayer?.path = labelLayerPath()
-        setLabelsFont()
-    }
-    
-    public override func layoutSubviews() {
-        super.layoutSubviews()
-        setLabelsFrame()
-        setLabelsFont()
-        
-        tabLayer?.removeFromSuperlayer()
-        
-        tabLayer = CAShapeLayer()
-        tabLayer?.fillColor = UIColor(red: 241/255, green: 241/255, blue: 241/255, alpha: 1).CGColor
-        tabLayer?.path = tabLayerPath()
-        layer.insertSublayer(tabLayer!, atIndex: 0)
-        
-        labelLayer?.removeFromSuperlayer()
-        
-        labelLayer = CAShapeLayer()
-        labelLayer?.fillColor = UIColor.whiteColor().CGColor
-        labelLayer?.path = labelLayerPath()
-        layer.insertSublayer(labelLayer!, above: tabLayer)
-    }
-    
     func setLabelsFrame() {
         if labels.count == 0 {
             return;
@@ -196,6 +206,20 @@ public class SlitTabView: UIControl {
         }
     }
     
+    func setLabelsFont() {
+        for (index, label) in labels.enumerate() {
+            if index == selectedTabIndex {
+                label.font = UIFont.boldSystemFontOfSize(18)
+                label.textColor = UIColor.blackColor()
+            } else {
+                label.font = UIFont.systemFontOfSize(18)
+                label.textColor = UIColor.darkGrayColor()
+            }
+        }
+    }
+    
+    //MARK: - Event
+    
     public override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         let location = touches.first?.locationInView(self)
         
@@ -207,17 +231,5 @@ public class SlitTabView: UIControl {
         moveSlit(true)
         
         sendActionsForControlEvents(.ValueChanged)
-    }
-    
-    func setLabelsFont() {
-        for (index, label) in labels.enumerate() {
-            if index == selectedTabIndex {
-                label.font = UIFont.boldSystemFontOfSize(18)
-                label.textColor = UIColor.blackColor()
-            } else {
-                label.font = UIFont.systemFontOfSize(18)
-                label.textColor = UIColor.darkGrayColor()
-            }
-        }
     }
 }
