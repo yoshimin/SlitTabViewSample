@@ -83,7 +83,6 @@ public class SlitTabView: UIControl {
             animation.duration = 0.25
             animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
             animation.removedOnCompletion = false
-            animation.fillMode = kCAFillModeForwards
             
             CATransaction.begin()
             CATransaction.setCompletionBlock({
@@ -92,9 +91,11 @@ public class SlitTabView: UIControl {
                 
                 // アニメーションが完了したら各Layerのpathに移動後のpathを反映させる
                 if tabAnimation != nil {
+                    self.tabLayer?.removeAnimationForKey("tabAnimation")
                     self.tabLayer?.path = self.tabLayerPath()
                 }
                 if labelAnimation != nil {
+                    self.labelLayer?.removeAnimationForKey("labelAnimation")
                     self.labelLayer?.path = self.labelLayerPath()
                 }
             })
